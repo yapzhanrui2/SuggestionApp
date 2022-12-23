@@ -91,10 +91,10 @@ public class MongoSuggestionData : ISuggestionData
                 suggestion.UserVotes.Remove(userId);
             }
 
-            await suggestionInTransaction.ReplaceOneAsync(s => s.Id == suggestionId, suggestion);
+            await suggestionInTransaction.ReplaceOneAsync(session, s => s.Id == suggestionId, suggestion);
 
             var userInTranscation = db.GetCollection<UserModel>(_db.UserCollectionName);
-            var user = await _userData.GetUser(suggestion.Author.Id);
+            var user = await _userData.GetUser(userId);
 
             if (isUpvote)
             {
@@ -105,7 +105,7 @@ public class MongoSuggestionData : ISuggestionData
                 var suggestionToRemove = user.VotedOnSuggestions.Where(s => s.Id == suggestionId).First();
                 user.VotedOnSuggestions.Remove(suggestionToRemove);
             }
-            await userInTranscation.ReplaceOneAsync(u => u.Id == userId, user);
+            await userInTranscation.ReplaceOneAsync(session, u => u.Id == userId, user);
 
             await session.CommitTransactionAsync();
 
@@ -128,12 +128,12 @@ public class MongoSuggestionData : ISuggestionData
         {
             var db = client.GetDatabase(_db.DbName);
             var suggestionInTransaction = db.GetCollection<SuggestionModel>(_db.SuggestionCollectionName);
-            await suggestionInTransaction.InsertOneAsync(suggestion);
+            await suggestionInTransaction.InsertOneAsync(session, suggestion);
 
             var userInTransaction = db.GetCollection<UserModel>(_db.UserCollectionName);
             var user = await _userData.GetUser(suggestion.Author.Id);
             user.AuthoredSuggestions.Add(new BasicSuggestionModel(suggestion));
-            await userInTransaction.ReplaceOneAsync(u => u.Id == user.Id, user);
+            await userInTransaction.ReplaceOneAsync(session, u => u.Id == user.Id, user);
 
             await session.CommitTransactionAsync();
 
