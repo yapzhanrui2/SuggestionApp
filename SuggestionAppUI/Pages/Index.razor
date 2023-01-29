@@ -46,12 +46,14 @@
                                 <div class="suggestion-entry-text-category" @onclick="(() => OpenDetails(s))">
                                     @s.Category?.CategoryName
                                 </div>
+                          
+                                <AuthorizeView Policy="Admin">
+                                    <button @onclick="(() => archivingSuggestion = s)" class="btn suggestion-entry-text-category btn-archive">
+                                        archive
+                                    </button>
+                                </AuthorizeView>
+
                             </div>
-                            <AuthorizeView Policy="Admin">
-                                <button @onclick="(() => archivingSuggestion = s)" class="btn suggestion-entry-text-category btn-archive">
-                                    archive
-                                </button>
-                            </AuthorizeView>
                         }
                         else
                         {
