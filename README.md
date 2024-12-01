@@ -1,6 +1,6 @@
-# SuggestionApp
+# Ticket Management System WebApp
 
-Walkthrough of C# Course by Tim Corey.
+Implementation based on C# Course by Tim Corey.
 
 Technologies:
 - Blazor Server(.NET 6)
