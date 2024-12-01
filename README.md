@@ -1,4 +1,4 @@
-# Ticket Management System WebApp
+# Ticket Management Web Application
 
 Implementation based on C# Course by Tim Corey.
 
