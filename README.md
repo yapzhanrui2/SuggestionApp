@@ -3,9 +3,9 @@
 Implementation based on C# Course by Tim Corey.
 
 Technologies:
-- Blazor Server(.NET 6)
+- Blazor Server(.NET)
 - MongoDB + Atlas
 - Azure Active Directory B2C
-- Bootstrap 5
+- Bootstrap
 - Authentication/Authorization
 - CSS
